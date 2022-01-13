@@ -45,6 +45,10 @@ const (
 	// ProxyStrategyDefaultRoute will only forward traffic to agents that have explicity advertised
 	// they serve the default route through an agent identifier. Typically used in combination with destHost
 	ProxyStrategyDefaultRoute ProxyStrategy = "defaultRoute"
+
+	// With this strategy the Proxy Server will pick a backend that has the same
+	// associated agent id as the requested id to establish the tunnel.
+	ProxyStrategyAgentId ProxyStrategy = "agentId"
 )
 
 // GenProxyStrategiesFromStr generates the list of proxy strategies from the
@@ -60,6 +64,8 @@ func GenProxyStrategiesFromStr(proxyStrategies string) ([]ProxyStrategy, error) 
 			ps = append(ps, ProxyStrategyDefault)
 		case string(ProxyStrategyDefaultRoute):
 			ps = append(ps, ProxyStrategyDefaultRoute)
+		case string(ProxyStrategyAgentId):
+			ps = append(ps, ProxyStrategyAgentId)
 		default:
 			return nil, fmt.Errorf("Unknown proxy strategy %s", s)
 		}

@@ -76,7 +76,7 @@ func (t *Tunnel) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	klog.V(4).Infof("Set pending(rand=%d) to %v", random, w)
-	backend, err := t.Server.getBackend(r.Host)
+	backend, err := t.Server.getBackend(r.Host, r.Header.Get("Agent-Id"))
 	if err != nil {
 		http.Error(w, fmt.Sprintf("currently no tunnels available: %v", err), http.StatusInternalServerError)
 		return
